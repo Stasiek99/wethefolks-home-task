@@ -60,5 +60,17 @@
     gsap.to(gesture, { autoAlpha: 0, scale: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
   }
 
-  window.Intro = { play, dismiss };
+  function resume() {
+    const player = query('.js-player');
+    const gesture = query('.js-gesture');
+
+    gsap.set(gesture, { autoAlpha: 1, scale: 1 });
+    gsap.set(player, { y: 0 });
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      startIdle(player, gesture);
+    }
+  }
+
+  window.Intro = { play, dismiss, resume };
 })();
