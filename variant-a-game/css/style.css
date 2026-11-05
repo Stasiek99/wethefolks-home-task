@@ -1,0 +1,94 @@
+:root {
+  --design-w: 360px;
+  --design-h: 640px;
+  --navy: #0b1e49;
+  --playfield-top: 168.5px;
+  --scale: 1;
+  --gut-x: -1027px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--navy);
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viewport {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.sprite {
+  display: block;
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--design-w);
+  height: var(--design-h);
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--scale));
+  transform-origin: center center;
+  background: var(--navy);
+}
+.stage__layer {
+  left: 0;
+  top: 0;
+  width: var(--design-w);
+  height: var(--design-h);
+}
+.stage__layer--texture {
+  opacity: 1;
+}
+
+.playfield {
+  position: absolute;
+  left: 0;
+  top: var(--playfield-top);
+  width: var(--design-w);
+  height: calc(var(--design-h) - var(--playfield-top));
+  overflow: hidden;
+}
+.playfield__gut {
+  left: 0;
+  top: calc(0px - var(--playfield-top));
+  width: 2528px;
+  height: var(--design-h);
+  transform: translate3d(var(--gut-x), 0, 0);
+  will-change: transform;
+}
+.playfield__player {
+  left: 55.5px;
+  top: calc(258.5px - var(--playfield-top));
+  width: 42px;
+  height: 41px;
+}
+
+.tutorial__gesture {
+  left: 147.5px;
+  top: 452px;
+  width: 86.5px;
+  height: 96px;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "gut-run",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gut Run: mobile tap-to-jump rich media ad (Variant A)",
+  "scripts": {
+    "build:css": "sass --no-source-map scss/style.scss css/style.css",
+    "watch:css": "sass --no-source-map --watch scss/style.scss css/style.css",
+    "start": "serve ."
+  },
+  "devDependencies": {
+    "sass": "^1.89.0",
+    "serve": "^14.2.4"
+  }
+}
