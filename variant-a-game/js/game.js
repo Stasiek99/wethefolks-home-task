@@ -4,6 +4,10 @@
   const CONFIG = window.GutRunConfig;
   const { player: PLAYER, physics: PHYSICS, scroll: SCROLL, bounds: BOUNDS, rewind: REWIND } = CONFIG;
 
+  const PLAYER_SHAPE = window.GutRunHitboxes.player.rects;
+  const SHAPE_TOP = Math.min(...PLAYER_SHAPE.map(([, ry]) => ry));
+  const SHAPE_BOTTOM = Math.max(...PLAYER_SHAPE.map(([, ry, , rh]) => ry + rh));
+
   const STATE = Object.freeze({
     READY: 'ready',
     REWIND: 'rewind',
@@ -24,7 +28,7 @@
   let accumulator = 0;
   let rewindTween = null;
 
-  let gutEl = null;
+  let worldEl = null;
   let setPlayerY = null;
   let renderDebug = () => {};
 
@@ -37,7 +41,7 @@
   }
 
   function render() {
-    gutEl.style.setProperty('--gut-x', gutX.toFixed(2) + 'px');
+    worldEl.style.setProperty('--gut-x', gutX.toFixed(2) + 'px');
     setPlayerY(y - PLAYER.startY);
     renderDebug();
   }
@@ -56,17 +60,30 @@
     velocityY = Math.min(velocityY + PHYSICS.gravity * dt, PHYSICS.maxFallSpeed);
     y += velocityY * dt;
 
-    const hitboxTop = y + PLAYER.hitbox.y;
-    const hitboxBottom = hitboxTop + PLAYER.hitbox.h;
-    if (hitboxTop < BOUNDS.top || hitboxBottom > BOUNDS.bottom) {
-      finish(STATE.FAIL);
+    if (y + SHAPE_TOP < BOUNDS.top || y + SHAPE_BOTTOM > BOUNDS.bottom) {
+      finish(STATE.FAIL, { reason: 'bounds' });
       return;
     }
 
-    if (gutX <= SCROLL.endX) {
+    const obstacle = window.Obstacles.hit(gutX, playerRects());
+    if (obstacle) {
+      finish(STATE.FAIL, { reason: 'obstacle', sprite: obstacle.sprite });
+      return;
+    }
+
+    if (gutX <= SCROLL.endX && window.Obstacles.allPassed(gutX, PLAYER.x)) {
       gutX = SCROLL.endX;
       finish(STATE.WIN);
     }
+  }
+
+  function playerRects() {
+    return PLAYER_SHAPE.map(([rx, ry, rw, rh]) => ({
+      x0: PLAYER.x + rx,
+      y0: y + ry,
+      x1: PLAYER.x + rx + rw,
+      y1: y + ry + rh,
+    }));
   }
 
   function frame(now) {
@@ -88,11 +105,11 @@
     rafId = 0;
   }
 
-  function finish(result) {
+  function finish(result, detail) {
     state = result;
     stopLoop();
     render();
-    emit(result === STATE.WIN ? 'win' : 'fail', { progress: progress() });
+    emit(result === STATE.WIN ? 'win' : 'fail', { progress: progress(), ...detail });
   }
 
   function beginRun() {
@@ -152,10 +169,15 @@
     const overlay = document.createElement('div');
     overlay.className = 'debug';
 
-    const hitbox = document.createElement('div');
-    hitbox.className = 'debug__hitbox';
-    hitbox.style.width = PLAYER.hitbox.w + 'px';
-    hitbox.style.height = PLAYER.hitbox.h + 'px';
+    const hitboxes = PLAYER_SHAPE.map(([rx, ry, rw, rh]) => {
+      const box = document.createElement('div');
+      box.className = 'debug__hitbox';
+      box.style.left = PLAYER.x + rx + 'px';
+      box.style.width = rw + 'px';
+      box.style.height = rh + 'px';
+      box.dataset.offset = ry;
+      return box;
+    });
 
     const limits = [BOUNDS.top, BOUNDS.bottom].map((lineY) => {
       const line = document.createElement('div');
@@ -164,19 +186,22 @@
       return line;
     });
 
-    overlay.append(hitbox, ...limits);
+    overlay.append(...hitboxes, ...limits);
     stage.append(overlay);
 
     return () => {
-      hitbox.style.transform = `translate(${PLAYER.x + PLAYER.hitbox.x}px, ${y + PLAYER.hitbox.y}px)`;
+      hitboxes.forEach((box) => {
+        box.style.top = y + Number(box.dataset.offset) + 'px';
+      });
     };
   }
 
   function init() {
     const stage = document.querySelector('.stage');
-    gutEl = document.querySelector('.playfield__gut');
+    worldEl = document.querySelector('.js-world');
     setPlayerY = gsap.quickSetter(document.querySelector('.js-player'), 'y', 'px');
 
+    window.Obstacles.build(worldEl, { debug: window.GutRun.DEBUG });
     if (window.GutRun.DEBUG) renderDebug = createDebugOverlay(stage);
 
     document.addEventListener('pointerdown', onPointerDown, { passive: true });
@@ -189,5 +214,6 @@
     get state() {
       return state;
     },
+    snapshot: () => ({ state, y, velocityY, gutX }),
   };
 })();

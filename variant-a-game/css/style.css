@@ -71,13 +71,20 @@ body {
   height: calc(var(--design-h) - var(--playfield-top));
   overflow: hidden;
 }
+.playfield__world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2528px;
+  height: 100%;
+  transform: translate3d(var(--gut-x), 0, 0);
+  will-change: transform;
+}
 .playfield__gut {
   left: 0;
   top: calc(0px - var(--playfield-top));
   width: 2528px;
   height: var(--design-h);
-  transform: translate3d(var(--gut-x), 0, 0);
-  will-change: transform;
 }
 .playfield__player {
   left: 55.5px;

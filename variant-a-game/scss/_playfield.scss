@@ -9,13 +9,21 @@
   height: calc(var(--design-h) - var(--playfield-top));
   overflow: hidden;
 
+  &__world {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: px2x(5056);
+    height: 100%;
+    transform: translate3d(var(--gut-x), 0, 0);
+    will-change: transform;
+  }
+
   &__gut {
     left: 0;
     top: calc(0px - var(--playfield-top));
     width: px2x(5056);
     height: var(--design-h);
-    transform: translate3d(var(--gut-x), 0, 0);
-    will-change: transform;
   }
 
   &__player {
