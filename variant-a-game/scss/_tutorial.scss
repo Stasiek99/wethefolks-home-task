@@ -1,0 +1,10 @@
+@use 'functions' as *;
+
+.tutorial {
+  &__gesture {
+    left: px2x(295);
+    top: px2x(904);
+    width: px2x(173);
+    height: px2x(192);
+  }
+}

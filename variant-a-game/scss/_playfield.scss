@@ -1,0 +1,27 @@
+@use 'functions' as *;
+@use 'variables' as *;
+
+.playfield {
+  position: absolute;
+  left: 0;
+  top: var(--playfield-top);
+  width: var(--design-w);
+  height: calc(var(--design-h) - var(--playfield-top));
+  overflow: hidden;
+
+  &__gut {
+    left: 0;
+    top: calc(0px - var(--playfield-top));
+    width: px2x(5056);
+    height: var(--design-h);
+    transform: translate3d(var(--gut-x), 0, 0);
+    will-change: transform;
+  }
+
+  &__player {
+    left: px2x(111);
+    top: calc(#{px2x(517)} - var(--playfield-top));
+    width: px2x(84);
+    height: px2x(82);
+  }
+}
