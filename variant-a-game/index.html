@@ -14,7 +14,9 @@
       <img class="sprite stage__layer stage__layer--texture" src="assets/01_game/bg_texture.png" alt="" draggable="false">
 
       <div class="playfield">
-        <img class="sprite playfield__gut" src="assets/01_game/gameplay.png" alt="" draggable="false">
+        <div class="playfield__world js-world">
+          <img class="sprite playfield__gut" src="assets/01_game/gameplay.png" alt="" draggable="false">
+        </div>
         <img class="sprite playfield__player js-player" src="assets/01_game/player.png" alt="" draggable="false">
       </div>
 
@@ -27,8 +29,10 @@
 
   <script src="vendor/gsap.min.js"></script>
   <script src="js/stage.js"></script>
+  <script src="js/hitboxes.js"></script>
   <script src="js/config.js"></script>
   <script src="js/intro.js"></script>
+  <script src="js/obstacles.js"></script>
   <script src="js/game.js"></script>
   <script src="js/main.js"></script>
 </body>
