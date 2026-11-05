@@ -19,4 +19,9 @@
       opacity: 1;
     }
   }
+
+  &--ended &__layer--headline,
+  &--ended .tutorial__gesture {
+    display: none;
+  }
 }

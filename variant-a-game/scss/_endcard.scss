@@ -1,0 +1,113 @@
+@use 'functions' as *;
+
+.endcard {
+  position: absolute;
+  inset: 0;
+  background: var(--navy);
+  visibility: hidden;
+
+  &--active {
+    visibility: visible;
+  }
+
+  &__layer {
+    left: 0;
+    top: 0;
+    width: var(--design-w);
+    height: var(--design-h);
+  }
+
+  &__button {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+  }
+
+  &__button-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  &--fail {
+    .endcard__bubble {
+      transform-origin: px2x(359.5) px2x(470.5);
+    }
+
+    .endcard__poo {
+      transform-origin: px2x(360) px2x(599);
+    }
+
+    .endcard__bacterium--1 {
+      transform-origin: px2x(289) px2x(267.5);
+    }
+
+    .endcard__bacterium--2 {
+      transform-origin: px2x(516.5) px2x(430.5);
+    }
+
+    .endcard__bacterium--3 {
+      transform-origin: px2x(174) px2x(462);
+    }
+
+    .endcard__bacterium--4 {
+      transform-origin: px2x(189) px2x(296);
+    }
+
+    .endcard__bacterium--5 {
+      transform-origin: px2x(443) px2x(310.5);
+    }
+
+    .endcard__button--cta {
+      left: px2x(77);
+      top: px2x(965);
+      width: px2x(372);
+      height: px2x(77);
+    }
+
+    .endcard__button--replay {
+      left: px2x(77);
+      top: px2x(1077);
+      width: px2x(371);
+      height: px2x(81);
+    }
+  }
+
+  &--win {
+    .endcard__bubble {
+      transform-origin: px2x(359.5) px2x(490.5);
+    }
+
+    .endcard__poo {
+      transform-origin: px2x(359.5) px2x(812);
+    }
+
+    .endcard__confetti {
+      transform-origin: px2x(130) px2x(370);
+    }
+
+    .endcard__button--cta {
+      left: px2x(54);
+      top: px2x(1120);
+      width: px2x(428);
+      height: px2x(91);
+    }
+  }
+}

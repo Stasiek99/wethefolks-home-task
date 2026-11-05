@@ -21,6 +21,34 @@
       </div>
 
       <img class="sprite stage__layer stage__layer--border" src="assets/border.png" alt="" draggable="false">
+
+      <section class="endcard endcard--fail js-endcard-fail" aria-hidden="true">
+        <img class="sprite endcard__layer endcard__bubble js-end-bubble" src="assets/02_endcard/fail/bubble.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--1 js-end-bacterium" src="assets/02_endcard/fail/bac1.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--2 js-end-bacterium" src="assets/02_endcard/fail/bac2.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--3 js-end-bacterium" src="assets/02_endcard/fail/bac3.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--4 js-end-bacterium" src="assets/02_endcard/fail/bac4.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--5 js-end-bacterium" src="assets/02_endcard/fail/bac5.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__poo js-end-poo" src="assets/02_endcard/fail/sad.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__headline js-end-headline" src="assets/02_endcard/fail/hl.png" alt="Poo, das tat weh! Erfahre jetzt, was deinem Darm guttut." draggable="false">
+        <button class="endcard__button endcard__button--cta js-end-cta" type="button">
+          <img class="endcard__button-image" src="assets/02_endcard/fail/cta.png" alt="Jetzt informieren!" draggable="false">
+        </button>
+        <button class="endcard__button endcard__button--replay js-end-replay" type="button">
+          <img class="endcard__button-image" src="assets/02_endcard/fail/replay.png" alt="Nochmal spielen" draggable="false">
+        </button>
+      </section>
+
+      <section class="endcard endcard--win js-endcard-win" aria-hidden="true">
+        <img class="sprite endcard__layer endcard__bubble js-end-bubble" src="assets/02_endcard/win/bubble.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__poo js-end-poo" src="assets/02_endcard/win/happy.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__confetti js-end-confetti" src="assets/02_endcard/win/konfetti.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__headline js-end-headline" src="assets/02_endcard/win/hl.png" alt="Poo, tut das gut! Wenn du weißt, was dein Darm braucht." draggable="false">
+        <button class="endcard__button endcard__button--cta js-end-cta" type="button">
+          <img class="endcard__button-image" src="assets/02_endcard/win/cta.png" alt="Jetzt mehr erfahren" draggable="false">
+        </button>
+      </section>
+
       <img class="sprite stage__layer stage__layer--logo js-logo" src="assets/logo.png" alt="Logo" draggable="false">
       <img class="sprite stage__layer stage__layer--headline js-headline" src="assets/01_game/tut.png" alt="Bringe Poo durch den Darm ans Ziel." draggable="false">
       <img class="sprite tutorial__gesture js-gesture" src="assets/gesture.png" alt="Tab to run" draggable="false">
@@ -34,6 +62,7 @@
   <script src="js/intro.js"></script>
   <script src="js/obstacles.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/endcard.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

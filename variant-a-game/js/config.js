@@ -34,6 +34,13 @@ window.GutRunConfig = Object.freeze({
   rewind: Object.freeze({
     duration: 0.6,
   }),
+
+  endcard: Object.freeze({
+    failDelay: 0.7,
+    winDelay: 0.9,
+    fade: 0.3,
+  }),
+
   course: Object.freeze([
     { sprite: 'bac1', x: 430, y: 296 },
     { sprite: 'txt3', x: 550, y: 504 },
