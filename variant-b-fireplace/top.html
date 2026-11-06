@@ -8,12 +8,17 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <a class="ad ad--top js-ad" href="https://example.com/landing" target="_blank" rel="noopener">
+  <a class="ad ad--top js-ad" data-part="top" href="https://example.com/landing" target="_blank" rel="noopener">
     <img class="ad__layer ad__layer--bg" src="assets/top/bg.jpg" alt="">
     <img class="ad__layer ad__layer--seam ad__layer--seam-start" src="assets/top/seam-start.jpg" alt="">
     <img class="ad__layer ad__layer--seam ad__layer--seam-end" src="assets/top/seam-end.jpg" alt="">
-    <img class="ad__layer ad__layer--headline" src="assets/top/hl.png" alt="Natürlich stark bei Hustenreiz &amp; Halsschmerzen.">
+    <img class="ad__layer ad__layer--line ad__layer--line-1" src="assets/top/hl.png" alt="Natürlich stark bei">
+    <img class="ad__layer ad__layer--line ad__layer--line-2" src="assets/top/hl.png" alt="Hustenreiz &amp;">
+    <img class="ad__layer ad__layer--line ad__layer--line-3" src="assets/top/hl.png" alt="Halsschmerzen.">
   </a>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/sync.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
