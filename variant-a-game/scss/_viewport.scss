@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .viewport {
   position: fixed;
   inset: 0;
@@ -5,4 +7,12 @@
   height: 100dvh;
   overflow: hidden;
   background: var(--navy);
+
+  @media (max-aspect-ratio: 9 / 16) {
+    background: linear-gradient(to bottom, $logo-bar 50%, $border-bottom 50%);
+
+    &:has(.stage--ended) {
+      background: linear-gradient(to bottom, $logo-bar 50%, var(--navy) 50%);
+    }
+  }
 }

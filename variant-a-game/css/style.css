@@ -4,6 +4,8 @@
   --navy: #0b1e49;
   --playfield-top: 168.5px;
   --scale: 1;
+  --stage-x: 0px;
+  --stage-y: 0px;
   --gut-x: -1027px;
 }
 
@@ -24,6 +26,7 @@ body {
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 .viewport {
@@ -33,6 +36,14 @@ body {
   height: 100dvh;
   overflow: hidden;
   background: var(--navy);
+}
+@media (max-aspect-ratio: 9/16) {
+  .viewport {
+    background: linear-gradient(to bottom, #fff 50%, rgb(216, 156, 149) 50%);
+  }
+  .viewport:has(.stage--ended) {
+    background: linear-gradient(to bottom, #fff 50%, var(--navy) 50%);
+  }
 }
 
 .sprite {
@@ -44,13 +55,13 @@ body {
 
 .stage {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 0;
+  top: 0;
   width: var(--design-w);
   height: var(--design-h);
   overflow: hidden;
-  transform: translate(-50%, -50%) scale(var(--scale));
-  transform-origin: center center;
+  transform: translate(var(--stage-x), var(--stage-y)) scale(var(--scale));
+  transform-origin: 0 0;
   background: var(--navy);
 }
 .stage__layer {
@@ -194,12 +205,12 @@ body {
 
 .mute-toggle {
   position: absolute;
-  top: 13px;
-  right: 8px;
-  width: 32px;
-  height: 32px;
+  top: 11px;
+  right: 6px;
+  width: 36px;
+  height: 36px;
   margin: 0;
-  padding: 5px;
+  padding: 6px;
   border: 0;
   background: none;
   color: var(--navy);

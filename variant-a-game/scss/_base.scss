@@ -6,6 +6,8 @@
   --navy: #{$navy};
   --playfield-top: #{$playfield-top};
   --scale: 1;
+  --stage-x: 0px;
+  --stage-y: 0px;
   --gut-x: #{$gut-start-x};
 }
 
@@ -26,4 +28,5 @@ body {
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
