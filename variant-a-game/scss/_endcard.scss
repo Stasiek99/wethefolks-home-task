@@ -8,6 +8,10 @@
 
   &--active {
     visibility: visible;
+
+    .endcard__layer {
+      will-change: transform, opacity;
+    }
   }
 
   &__layer {

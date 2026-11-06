@@ -1,0 +1,13 @@
+.hud {
+  position: fixed;
+  left: 4px;
+  bottom: 4px;
+  max-width: calc(100% - 8px);
+  padding: 4px 6px;
+  color: #fff;
+  font: 11px/1.35 monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}

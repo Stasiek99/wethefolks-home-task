@@ -26,6 +26,7 @@
   let musicLoop = null;
 
   const buffers = {};
+  const loadErrors = [];
   const active = new Set();
 
   function readMuted() {
@@ -84,7 +85,9 @@
         if (name === 'music' && wantMusic) startMusic();
       })
       .catch((error) => {
-        console.warn('[GutRun] audio "' + name + '" not available:', error && error.message);
+        const reason = (error && (error.message || error.name)) || String(error);
+        loadErrors.push(name + ': ' + reason);
+        console.warn('[GutRun] audio "' + name + '" not available:', reason);
       });
   }
 
@@ -93,8 +96,16 @@
     if (resumed && resumed.catch) resumed.catch(() => {});
   }
 
+  function playSilence() {
+    const source = context.createBufferSource();
+    source.buffer = context.createBuffer(1, 1, 22050);
+    source.connect(context.destination);
+    source.start(0);
+  }
+
   function unlock() {
     if (!context || suspendedByPause || context.state === 'running') return;
+    playSilence();
     resumeContext();
   }
 
@@ -185,6 +196,8 @@
       return;
     }
 
+    if (navigator.audioSession) navigator.audioSession.type = 'playback';
+
     context = new AudioContextClass({ latencyHint: 'interactive' });
     master = context.createGain();
     master.gain.value = muted ? 0 : 1;
@@ -226,6 +239,7 @@
     snapshot: () => ({
       state: context ? context.state : 'unsupported',
       loaded: Object.keys(buffers),
+      errors: loadErrors,
       voices: active.size,
       names: Array.from(active, (voice) => voice.name),
       music: Boolean(music),

@@ -73,7 +73,7 @@ body {
 .stage__layer--texture {
   opacity: 1;
 }
-.stage--ended .stage__layer--headline, .stage--ended .tutorial__gesture {
+.stage--ended .stage__layer--headline, .stage--ended .stage__layer--texture, .stage--ended .stage__layer--border, .stage--ended .playfield, .stage--ended .tutorial__gesture {
   display: none;
 }
 
@@ -122,6 +122,9 @@ body {
 }
 .endcard--active {
   visibility: visible;
+}
+.endcard--active .endcard__layer {
+  will-change: transform, opacity;
 }
 .endcard__layer {
   left: 0;
@@ -262,4 +265,18 @@ body {
   width: 100%;
   height: 0;
   border-top: 1px dashed #ff2bd6;
+}
+
+.hud {
+  position: fixed;
+  left: 4px;
+  bottom: 4px;
+  max-width: calc(100% - 8px);
+  padding: 4px 6px;
+  color: #fff;
+  font: 11px/1.35 monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
 }
