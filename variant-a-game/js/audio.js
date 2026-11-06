@@ -20,6 +20,7 @@
   let muted = readMuted();
   let wantMusic = false;
   let music = null;
+  let suspendedByPause = false;
 
   const buffers = {};
   const active = new Set();
@@ -63,20 +64,30 @@
       });
   }
 
-  function unlock() {
-    if (!context || context.state === 'running') return;
+  function resumeContext() {
     const resumed = context.resume();
     if (resumed && resumed.catch) resumed.catch(() => {});
   }
 
-  function watchForUnlock() {
-    const onGesture = () => unlock();
-    UNLOCK_EVENTS.forEach((type) => document.addEventListener(type, onGesture, { capture: true, passive: true }));
+  function unlock() {
+    if (!context || suspendedByPause || context.state === 'running') return;
+    resumeContext();
+  }
 
-    context.addEventListener('statechange', () => {
-      if (context.state !== 'running') return;
-      UNLOCK_EVENTS.forEach((type) => document.removeEventListener(type, onGesture, { capture: true }));
-    });
+  function watchForUnlock() {
+    UNLOCK_EVENTS.forEach((type) => document.addEventListener(type, unlock, { capture: true, passive: true }));
+  }
+
+  function pause() {
+    if (!context || context.state !== 'running') return;
+    suspendedByPause = true;
+    context.suspend();
+  }
+
+  function resume() {
+    if (!suspendedByPause) return;
+    suspendedByPause = false;
+    resumeContext();
   }
 
   function createVoice(name, { volume, loop }) {
@@ -177,6 +188,8 @@
 
   window.GameAudio = {
     init,
+    pause,
+    resume,
     setMuted,
     toggleMute: () => setMuted(!muted),
     get muted() {
