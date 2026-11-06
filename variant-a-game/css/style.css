@@ -192,6 +192,47 @@ body {
   height: 45.5px;
 }
 
+.mute-toggle {
+  position: absolute;
+  top: 13px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 5px;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.mute-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+.mute-toggle:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+.mute-toggle__icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: currentColor;
+}
+.mute-toggle__icon--off {
+  display: none;
+}
+.mute-toggle--muted .mute-toggle__icon--on {
+  display: none;
+}
+.mute-toggle--muted .mute-toggle__icon--off {
+  display: block;
+}
+
 .debug {
   position: absolute;
   inset: 0;

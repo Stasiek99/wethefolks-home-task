@@ -52,6 +52,17 @@
       <img class="sprite stage__layer stage__layer--logo js-logo" src="assets/logo.png" alt="Logo" draggable="false">
       <img class="sprite stage__layer stage__layer--headline js-headline" src="assets/01_game/tut.png" alt="Bringe Poo durch den Darm ans Ziel." draggable="false">
       <img class="sprite tutorial__gesture js-gesture" src="assets/gesture.png" alt="Tab to run" draggable="false">
+
+      <button class="mute-toggle js-mute" type="button" aria-label="Ton ausschalten">
+        <svg class="mute-toggle__icon mute-toggle__icon--on" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9v6h4l5 4V5L7 9H3z" stroke="none"/>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <svg class="mute-toggle__icon mute-toggle__icon--off" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9v6h4l5 4V5L7 9H3z" stroke="none"/>
+          <path d="M16 9l5 6M21 9l-5 6" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
     </main>
   </div>
 
@@ -63,6 +74,8 @@
   <script src="js/obstacles.js"></script>
   <script src="js/game.js"></script>
   <script src="js/endcard.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/mute.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
