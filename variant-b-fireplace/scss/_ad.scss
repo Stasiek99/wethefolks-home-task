@@ -1,0 +1,44 @@
+@use 'variables' as *;
+
+.ad {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &--left,
+  &--right {
+    width: $skyscraper-w;
+    height: $skyscraper-h;
+  }
+
+  &--top {
+    width: $top-w;
+    height: $top-h;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -4px;
+  }
+
+  &__layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+
+    &--cta {
+      left: $cta-left;
+      top: $cta-top;
+      width: $cta-w;
+      height: $cta-h;
+    }
+  }
+}
