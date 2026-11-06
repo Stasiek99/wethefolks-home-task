@@ -5,6 +5,7 @@
 
   const frames = Array.from(document.querySelectorAll('.js-frame'));
   const replay = document.querySelector('.js-replay');
+  const query = new URLSearchParams(window.location.search);
   const ready = new Set();
   let started = false;
 
@@ -31,4 +32,10 @@
   }, SAFETY_MS);
 
   replay.addEventListener('click', startAll);
+
+  frames.forEach(function (frame) {
+    const params = new URLSearchParams({ sync: '1' });
+    if (query.has('debug')) params.set('debug', '1');
+    frame.src = frame.dataset.src + '?' + params;
+  });
 })();

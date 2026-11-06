@@ -15,9 +15,12 @@
   function init() {
     const ad = document.querySelector('.js-ad');
     const part = ad.dataset.part;
-    const sync = new URLSearchParams(window.location.search).has('sync');
+    const params = new URLSearchParams(window.location.search);
+    const sync = params.has('sync');
 
     ad.href = clickTag;
+
+    if (params.has('debug')) window.Debug.init(ad, part);
 
     const timeline = window.Intro.build(ad, part);
     const motion = window.Motion.init(timeline);
