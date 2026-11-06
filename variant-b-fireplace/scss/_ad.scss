@@ -1,5 +1,17 @@
 @use 'variables' as *;
 
+@mixin seam-mask($direction, $fade-bottom) {
+  $horizontal: linear-gradient($direction, #000, transparent);
+  $vertical: linear-gradient(#000, #000);
+
+  @if $fade-bottom {
+    $vertical: linear-gradient(to bottom, #000 calc(100% - #{$seam-fade-bottom}), transparent);
+  }
+
+  -webkit-mask-image: $horizontal, $vertical;
+  mask-image: $horizontal, $vertical;
+}
+
 .ad {
   position: relative;
   display: block;
@@ -33,6 +45,34 @@
     user-select: none;
     -webkit-user-drag: none;
     pointer-events: none;
+
+    &--seam {
+      width: $seam-w;
+      height: $seam-h;
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+
+    &--seam-start {
+      left: 0;
+      @include seam-mask(to right, false);
+    }
+
+    &--seam-end {
+      left: auto;
+      right: 0;
+      @include seam-mask(to left, false);
+    }
+
+    &--seam-fade {
+      &.ad__layer--seam-start {
+        @include seam-mask(to right, true);
+      }
+
+      &.ad__layer--seam-end {
+        @include seam-mask(to left, true);
+      }
+    }
 
     &--cta {
       left: $cta-left;
