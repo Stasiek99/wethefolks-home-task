@@ -1,103 +1,167 @@
-# Take-home task: Junior Frontend Engineer (SF-FE-01-BAM)
+# We The Folks take-home: Gut Run and Fireplace
 
-Hi, and thanks for applying to We The Folks.
+**Two rich media ads in plain HTML, SCSS and modern JavaScript (GSAP for animation, no frameworks): a mobile tap-to-jump mini game ("Gut Run") and a three-part animated desktop skin ("Fireplace"). Task: Junior Frontend Engineer, SF-FE-01-BAM.**
 
-This task is a small version of what you would do in your first weeks with us: take a designer's layout and a folder of exported assets and turn them into a working, animated rich media ad. It is based on real campaigns our team shipped this autumn.
+![HTML5](https://img.shields.io/badge/HTML5-e34f26?logo=html5&logoColor=white)
+![Sass](https://img.shields.io/badge/Sass-BEM-cc6699?logo=sass&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?logo=javascript&logoColor=black)
+![GSAP](https://img.shields.io/badge/GSAP-3.15-88ce02?logo=greensock&logoColor=black)
+![Web Audio](https://img.shields.io/badge/Web%20Audio-API-0a66c2)
 
-**Please complete both variants below.** Both are scored on the same criteria.
+🇬🇧 English | [🇵🇱 Polski](README.pl.md)
 
-- **Variant A: Game Ad** (a mobile tap-to-jump mini game)
-- **Variant B: Fireplace Ad** (a three-part animated desktop skin)
-
-**Scope:** a smaller, finished and polished ad beats a bigger, half-done one.
-**Deadline:** 4 days from the moment you receive the email with this task.
-**Questions:** reply to the email with this task at any time. Asking a good question is a plus, not a minus.
-
----
-
-## Ground rules (both variants)
-
-1. **Plain HTML, CSS (or SCSS) and modern JavaScript (ES6+).** No UI frameworks (no React, Vue, Angular, Svelte). Ads have to load fast and run everywhere.
-2. **Allowed libraries:** GSAP for animation. For Variant A you may also use Phaser or write the game on a plain `<canvas>` or DOM, your choice. A bundler (Vite, webpack, esbuild) is optional. Opening `index.html` through a local server is enough.
-3. **Use the provided assets.** All images are exported at **2x**, so render them at 50% of their pixel size. Don't redraw or replace them. Positions should match the design files as closely as you can measure them, not "by eye".
-4. **Clickout:** every CTA must open the landing page in a new window through a click tag:
-   ```js
-   const clickTag = window.clickTag || 'https://example.com/landing';
-   ```
-5. **Weight:** keep the total ad (all files you ship) under **3 MB**. Compress assets if you need to, and tell us what you did.
-6. **AI tools are welcome.** We work AI-first every day (Claude Code, Playwright). Use whatever you like, but you must understand and be able to explain every line you submit. Tell us briefly how you used AI and where you had to correct it.
-7. **Confidentiality:** the assets are adapted from real campaigns, with logos and packaging replaced by placeholders, and are shared with you only for this exercise. Please use them only for this task.
+The reasoning behind the main choices is in [DECISIONS.md](DECISIONS.md).
 
 ---
 
-## Variant A: Game Ad ("Gut Run")
+## The two ads
 
-A mobile fullscreen ad with a Flappy-Bird-style mini game for a campaign about gut health. The player guides a smiling poo emoji through a stylised gut and avoids obstacles.
-
-**Files:** `variant-a-game/`
-- `design/00-concept.png`: concept slide with the game description (German)
-- `design/01-start.png`, `02-fail-endcard.png`, `03-win-endcard.png`: target screens
-- `assets/`: all layers (720x1280 @2x), obstacles, texts, endcards, music and sound effects
-
-**Format:** portrait mobile, designed at **360x640 CSS px** (assets 720x1280). The ad must fill the visible viewport of real phones (roughly 320x568 up to 430x932) without distortion and without anything important being cut off. Pay attention to mobile browser toolbars.
-
-**Required behaviour**
-1. **Start screen:** logo bar, headline and the tutorial overlay (`tut.png`, `gesture.png`, "tap to run"). The game starts on the first tap.
-2. **Gameplay**
-   - The player stays on the same vertical line (x is fixed). A tap makes it jump up. Without taps it falls (gravity).
-   - The gut (`gameplay.png`) and the obstacles move from right to left.
-   - Obstacles: the bacteria (`bac1` to `bac6`) and the text obstacles (`txt1` to `txt9`, e.g. "Stress", "Tabu"). **Each obstacle appears exactly once per run.**
-   - Touching an obstacle, or leaving the playfield at the top or bottom, ends the run with the **fail endcard**.
-   - Reaching the end of the gut after all obstacles have passed shows the **win endcard**.
-3. **Collision must feel fair.** The player should never "die" when it visibly did not touch anything. Hitboxes based on the full rectangular image are usually too big.
-4. **Fail endcard:** sad poo, bacteria, headline, CTA (clickout) and a **replay** button that restarts the game cleanly (no leftover timers, doubled speed, or duplicated sounds).
-5. **Win endcard:** happy poo, confetti, headline and CTA (clickout). Play the applause / cheer sound.
-6. **Sound:** background music loop during the game, crash sound on hit, fail and win sounds on the endcards. Audio may only start after the first user interaction (browser autoplay rules). Add a small **mute toggle**.
-7. **Animation:** at least an intro animation on the start screen and an animated entrance of the endcard elements (e.g. confetti, bouncing poo, CTA). Use easing, avoid abrupt stops.
-8. **Pause** the game and sound when the tab or ad is not visible (`visibilitychange`) and resume cleanly.
-
-**Nice to have:** a short "get ready" moment before obstacles arrive; gentle difficulty ramp; `prefers-reduced-motion` support for decorative animations; a debug mode (e.g. `?debug=1`) that draws hitboxes.
+| Variant | Folder | Format | Shipped weight (limit 3 MB) |
+| --- | --- | --- | --- |
+| **A: Gut Run**, mobile game | [`variant-a-game`](variant-a-game) | 360×640 CSS px design, scaled to the phone | **1.45 MB** |
+| **B: Fireplace**, desktop skin | [`variant-b-fireplace`](variant-b-fireplace) | top 1032×250, left and right 320×975 CSS px | **0.50 MB** left, **0.55 MB** right, **0.83 MB** top |
 
 ---
 
-## Variant B: Fireplace Ad
+## Run it locally
 
-A desktop "fireplace" skin for a cough and cold campaign: a top banner plus a left and a right skyscraper that frame the publisher's website. No interaction is planned besides the clickout. The goal is that it is **beautifully animated**.
+Requires Node.js 18 or newer (tested on 24). The compiled CSS is committed, so `npm install` only fetches the static server and Sass.
 
-**Files:** `variant-b-fireplace/`
-- `design/layout.png`: target layout of all three parts
-- `assets/top/`, `assets/left/`, `assets/right/`: background, headline, logo layers for each part (2x)
-- `assets/box.png` (text panel), `assets/cta.png` (button), `assets/bg-big.jpg` (one continuous background for the whole fireplace)
+```bash
+cd variant-a-game        # or: cd variant-b-fireplace
+npm install
+npm start
+```
 
-**Format:** three separate creatives that run side by side, built from 2x assets:
-- **Top:** 1032x250 CSS px (assets 2064x500)
-- **Left** and **Right:** 320x975 CSS px (assets 640x1950)
+| Variant | URL | Extras |
+| --- | --- | --- |
+| A | <http://localhost:3000> | `?debug=1` draws hitboxes and a small HUD (fps, worst frame, audio state) |
+| B | <http://localhost:3000/preview.html> | `?debug=1` overlays `design/layout.png` at 50% (key `O` toggles it); **Replay intro** button |
 
-Build each part as its own HTML file (`top.html`, `left.html`, `right.html`) because in production they are delivered as three separate ads. Add a `preview.html` that places the three parts (e.g. in iframes) like in `design/layout.png`, with an empty area in the middle where the website would be.
-
-**Required behaviour**
-1. **Pixel-accurate layout** matching `design/layout.png`: logo, product, text panel, copy and CTA in the right place and size on each skyscraper; three-line headline on the top banner.
-2. **Continuous background:** the moss background must look like one surface across all three parts. When they sit next to each other, the seams should line up. `bg-big.jpg` is provided for this, the per-part `bg.jpg` files are pre-cut versions. Decide which approach you use and explain why.
-3. **Intro animation** (roughly 3 to 6 seconds), coordinated across the three parts. For example: background slowly zooms in, logos fade/scale in, product slides in and **eases** to a stop, text panel and copy reveal, headline on the top banner builds line by line, CTA appears last.
-4. **After the intro**, keep it alive but calm: e.g. a subtle background zoom or drift and a gentle CTA pulse. It must not distract from the website content. Stop or reduce looping animation after about 30 seconds.
-5. **Clickout:** clicking anywhere on a part (or at least on the CTA) opens the click tag.
-6. **Performance:** animations should run smoothly on an average laptop. Animate `transform` and `opacity`, not layout properties. Respect `prefers-reduced-motion` (show the final state without motion).
-
-**Nice to have:** the three parts start their animation in sync even though they are separate documents (e.g. via `postMessage` from the preview page); a debug overlay that shows the design layout at 50% opacity on top of your build so you can check alignment.
+For Variant A on a phone, open your computer's LAN address (for example `http://192.168.1.10:3000`). Audio needs a server, because browsers block `fetch` on `file://`. After editing SCSS run `npm run build:css`.
 
 ---
 
-## Deliverables (both variants)
+## Variant A: Gut Run
 
-1. **A new public GitHub repository.** Do not fork this repository: create your own and copy the files you need. Send us the link in a reply to the email with this task. We read the commit history, so commit as you go rather than one big final commit.
-2. **README.md** with:
-   - how to run it locally (one or two commands at most),
-   - what you would do next with more time,
-   - any known issues or shortcuts you took.
-3. **DECISIONS.md:** a short decision log (bullet points are fine). Examples: how you scaled the ad to the viewport, how you did collision / how you aligned the background, how you handled audio, why you picked canvas vs DOM, what you compressed.
-4. **AI note** (a few sentences, in the README is fine): which tools you used, for what, and one example where the output was wrong and you fixed it.
-5. Optional: a short screen recording (under 1 minute).
+A fullscreen mobile ad with a Flappy-Bird-style game. The player guides a smiling poo through a stylised gut and dodges 15 obstacles (bacteria and words such as "Stress" and "Tabu"). Each obstacle appears exactly once per run.
 
-Everything you submit must be stored in the repository, including the optional recording.
+<p>
+  <img src="docs/images/a-start.png" width="200" alt="Start screen">
+  &nbsp;
+  <img src="docs/images/a-gameplay.png" width="200" alt="Gameplay">
+  &nbsp;
+  <img src="docs/images/a-fail.png" width="200" alt="Fail endcard">
+  &nbsp;
+  <img src="docs/images/a-win.png" width="200" alt="Win endcard">
+</p>
 
-Reply to the email with this task with the repository link when you are done.
+- **Start and gameplay**: animated intro, first tap starts the run after a short "get ready" rewind. Fixed player position, tap to jump, gravity, scroll speed ramping from 100 to 130 px/s.
+- **Fair collisions**: hitboxes come from each sprite's alpha mask, not its bounding box. Over 108,000 tested positions, no death happened more than 2 px from a visible touch.
+- **Endcards**: fail (CTA and replay) and win (confetti, CTA), with eased, staggered entrances. Replay resets everything: no leftover timers, doubled speed or duplicated sounds.
+- **Sound** (Web Audio API): music loop, crash, fail, cheer and applause, started only after the first gesture, with a remembered mute toggle.
+- **Pause** on `visibilitychange` for the game, sound and animations.
+- **Responsive**: scales to any phone viewport (320×568 up to 430×932) without distortion. `prefers-reduced-motion` replaces decorative animation with the final state.
+
+**Debug mode** (`?debug=1`) draws the hitboxes:
+
+<img src="docs/images/a-debug.png" width="200" alt="Debug mode with hitboxes">
+
+**Checked on:** Android Infinix Note 30 Pro in Chrome (60 fps, worst frame 17 ms, a few dropped frames at the start while sprites decode), iPhone in Safari (works, including sound), and desktop Chrome with CPU throttling and bot players (win, fail, replay, pause, reduced motion).
+
+---
+
+## Variant B: Fireplace
+
+Three separate creatives (`top.html`, `left.html`, `right.html`) that frame a publisher's website. `preview.html` shows them side by side in iframes, like `design/layout.png`, with an empty area for the website.
+
+![Preview](docs/images/b-preview.jpg)
+
+- **Pixel-accurate layout**: layers sit at the position and 50% size of the 2x assets, and the CTA position was measured from the design.
+- **Continuous background**: the pre-cut backgrounds keep the product as in the design, and thin strips cut from `bg-big.jpg` are blended in at the seams so the moss reads as one surface (details in [DECISIONS.md](DECISIONS.md#variant-b-fireplace)).
+- **Intro** (about 4.6 s, the three parts in sync): background zoom, logos, text panel, copy, a headline built line by line, CTA last. Only `transform` and `opacity` are animated.
+- **Idle loop**: a slow background drift and a soft CTA pulse that stop after 30 seconds, when the GSAP ticker goes to sleep.
+- **Synchronised start** across the three documents through `postMessage` (`?sync=1`, used by the preview). Opened alone, a part starts immediately.
+- **Clickout** on the whole part, **`prefers-reduced-motion`** (final state at once), **pause** when the tab is hidden, and a preview that scales itself to the window.
+
+**Intro, two moments:**
+
+![Intro](docs/images/b-intro.jpg)
+
+**Debug overlay** (`?debug=1`), the design at 50% on top of the build:
+
+![Debug overlay](docs/images/b-debug.jpg)
+
+---
+
+## Known issues and shortcuts
+
+**Both**
+- No automated tests. I verified with headless Chrome scripts, real phones (Variant A) and manual checks.
+- No JavaScript build step: plain scripts loaded in order, to keep the ads small. Compiled CSS is committed.
+- Click tags were tested only with the default URL, not in a real ad server.
+
+**Variant A**
+- Designed for portrait phones. In landscape or on a tablet the game keeps its 9:16 shape with navy sides.
+- The obstacle course is fixed (hand-tuned and validated), so every run is the same.
+
+**Variant B**
+- **The top headline asset does not match the design.** `layout.png` reads "NATÜRLICH STARK / BEI HUSTENREIZ & / HALSSCHMERZEN.", the supplied `top/hl.png` reads "STARK BEI / HUSTENREIZ & / HALSSCHMERZEN.". I used the asset as supplied, so the debug overlay shows the two headlines overlapping.
+- **Several PNG-8 assets had no transparency** (`box.png`, `cta.png`, both `hl.png`). `tools/fix-alpha.py` restores it. The panel opacity (0.8) and the copy's anti-aliasing were reconstructed, so they are close, not exact.
+- **`bg-big.jpg` does not match the pre-cut backgrounds** (different grading and product), so it is used only for the seam strips.
+- **The product is baked into the background**, so it cannot slide in alone; the background zoom and fade carry the intro.
+- The seam strips are static while the background below them zooms, so slight movement may be visible inside their 64 px blend zone.
+- The 4 px gap between parts in the preview is an assumption from the width of `bg-big.jpg` (1680 px).
+- Tested only in Chrome, not in Safari or Firefox.
+
+---
+
+## What I would do next
+
+- Add Playwright tests: a bot that wins and loses Variant A, and frame-timing checks for both ads.
+- Variant A: several obstacle courses, a difficulty ramp across levels, a landscape layout, lighter music (it is half of the ad's weight).
+- Variant B: ask the designer for a clean background without the product so it can slide in on its own, replace the damaged PNG-8 files with proper exports, pause ads that scroll out of view.
+- Package each ad as its own zip, test the click tags in a real ad server, and check Safari and Firefox.
+
+---
+
+## AI note
+
+I planned the steps and decisions myself and used **Claude Code** for the implementation: scaffolding, tooling (the alpha-mask hitbox generator, the course checker, headless Chrome scripts that play the game and take screenshots) and reviewing my own code. I read and tested everything it produced.
+
+Where it was wrong, and what I fixed:
+- **The first jump killed the player.** There was no headroom at the start, so the first tap hit the top bound. I added a separate, gentler `startVelocity`.
+- **A hand-made obstacle course was too dense** to pass fairly. I replaced it with an optimiser and a validator (`tools/check-course.py`) that checks every gap against the physics.
+- **Text hitboxes were unfair.** A pixel-versus-rectangle analysis showed deaths far from any touch, so I regenerated them.
+- **A wrong size claim.** It said the music would push Variant A over 3 MB, but it was already counted. I measured the real weight with a script.
+- **The Variant B background.** The assumption that `bg-big.jpg` is just the three backgrounds put together was false: stitching the pre-cut files showed a seam, and `bg-big.jpg` has a different product. I used a hybrid (see [DECISIONS.md](DECISIONS.md#variant-b-fireplace)).
+
+---
+
+## Tech stack and structure
+
+| Layer | Technology |
+| --- | --- |
+| Markup and logic | HTML5, ES6+ JavaScript (plain scripts), no framework |
+| Styles | Sass (SCSS), BEM (`block__element--modifier`), compiled CSS committed |
+| Animation | GSAP 3.15 (`vendor/gsap.min.js`, standard license) |
+| Audio | Web Audio API (Variant A) |
+| Tooling | `sass`, `serve`; Python with Pillow for the asset tools |
+
+```
+.
+├─ variant-a-game/
+│  ├─ index.html · css/ · scss/ · js/ · assets/ · vendor/
+│  ├─ tools/               # gen-hitboxes.py, check-course.py
+│  └─ design/              # target screens (not shipped)
+├─ variant-b-fireplace/
+│  ├─ left.html · right.html · top.html · preview.html
+│  ├─ css/ · scss/ · js/ · assets/ · vendor/
+│  ├─ tools/               # fix-alpha.py, slice-seams.py
+│  └─ design/              # layout.png (not shipped)
+├─ docs/images/            # README screenshots
+├─ README.md · README.pl.md
+└─ DECISIONS.md · DECISIONS.pl.md
+```
+
+`design/`, `tools/` and `bg-big.jpg` are not referenced by any ad, so they are not part of its weight.

@@ -1,15 +1,26 @@
 @use 'variables' as *;
 
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: $page-bg;
+}
+
+.fit {
+  width: calc(#{$stage-w} * var(--scale, 1));
+  height: calc(#{$skyscraper-h} * var(--scale, 1));
+}
+
 .preview {
   display: grid;
   grid-template-columns: $skyscraper-w $top-w $skyscraper-w;
   grid-template-rows: $top-h calc(#{$skyscraper-h} - #{$top-h} - #{$gap});
   gap: $gap;
-  justify-content: center;
-  margin: 0;
-  background: $page-bg;
-  min-height: 100vh;
-  overflow: auto;
+  width: $stage-w;
+  height: $skyscraper-h;
+  transform: scale(var(--scale, 1));
+  transform-origin: 0 0;
 
   &__frame {
     display: block;
