@@ -74,6 +74,18 @@
       }
     }
 
+    &--line-1 {
+      clip-path: inset(0 0 160px 0);
+    }
+
+    &--line-2 {
+      clip-path: inset(90px 0 93px 0);
+    }
+
+    &--line-3 {
+      clip-path: inset(157px 0 0 0);
+    }
+
     &--cta {
       left: $cta-left;
       top: $cta-top;

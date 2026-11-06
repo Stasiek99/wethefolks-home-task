@@ -66,6 +66,15 @@ body {
   -webkit-mask-image: linear-gradient(to left, #000, transparent), linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
   mask-image: linear-gradient(to left, #000, transparent), linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
 }
+.ad__layer--line-1 {
+  clip-path: inset(0 0 160px 0);
+}
+.ad__layer--line-2 {
+  clip-path: inset(90px 0 93px 0);
+}
+.ad__layer--line-3 {
+  clip-path: inset(157px 0 0 0);
+}
 .ad__layer--cta {
   left: 73.75px;
   top: 837.5px;

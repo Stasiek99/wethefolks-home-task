@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <a class="ad ad--right js-ad" href="https://example.com/landing" target="_blank" rel="noopener">
+  <a class="ad ad--right js-ad" data-part="right" href="https://example.com/landing" target="_blank" rel="noopener">
     <img class="ad__layer ad__layer--bg" src="assets/right/bg.jpg" alt="">
     <img class="ad__layer ad__layer--seam ad__layer--seam-start ad__layer--seam-fade" src="assets/right/seam.jpg" alt="">
     <img class="ad__layer ad__layer--box" src="assets/box.png" alt="">
@@ -16,6 +16,9 @@
     <img class="ad__layer ad__layer--logo" src="assets/right/logo.png" alt="Logo">
     <img class="ad__layer ad__layer--cta" src="assets/cta.png" alt="Jetzt entdecken">
   </a>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/sync.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

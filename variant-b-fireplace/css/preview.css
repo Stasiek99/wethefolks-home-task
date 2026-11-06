@@ -48,8 +48,22 @@ body {
   grid-column: 2;
   grid-row: 2;
   display: grid;
-  place-items: center;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
   color: #8a8a8a;
   font: 14px/1.4 system-ui, sans-serif;
   border: 1px dashed #4a4a4a;
+}
+.preview__replay {
+  padding: 8px 16px;
+  border: 1px solid #5a5a5a;
+  border-radius: 4px;
+  background: #333;
+  color: #ddd;
+  font: inherit;
+  cursor: pointer;
+}
+.preview__replay:hover {
+  background: #444;
 }
