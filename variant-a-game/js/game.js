@@ -27,6 +27,7 @@
   let lastTime = 0;
   let accumulator = 0;
   let rewindTween = null;
+  let paused = false;
 
   let worldEl = null;
   let setPlayerY = null;
@@ -147,10 +148,26 @@
   }
 
   function onPointerDown(event) {
-    if (event.button > 0) return;
+    if (paused || event.button > 0) return;
 
     if (state === STATE.READY) start();
     else if (state === STATE.RUNNING) jump();
+  }
+
+  function pause() {
+    if (paused) return;
+    paused = true;
+    if (state === STATE.RUNNING) stopLoop();
+  }
+
+  function resume() {
+    if (!paused) return;
+    paused = false;
+    if (state !== STATE.RUNNING) return;
+
+    accumulator = 0;
+    lastTime = performance.now();
+    rafId = requestAnimationFrame(frame);
   }
 
   function reset() {
@@ -212,9 +229,11 @@
   window.Game = {
     init,
     reset,
+    pause,
+    resume,
     get state() {
       return state;
     },
-    snapshot: () => ({ state, y, velocityY, gutX }),
+    snapshot: () => ({ state, y, velocityY, gutX, paused }),
   };
 })();

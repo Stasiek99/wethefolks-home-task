@@ -11,6 +11,7 @@
   window.Game.init();
   window.GameAudio.init();
   window.Mute.init();
+  window.Visibility.init();
 
   const decoded = Array.from(document.images, (img) => img.decode().catch(() => {}));
   Promise.all(decoded).then(() => window.Intro.play());
