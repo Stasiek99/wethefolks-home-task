@@ -1,0 +1,15 @@
+{
+  "name": "fireplace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fireplace: three-part animated desktop skin (Variant B)",
+  "scripts": {
+    "build:css": "sass --no-source-map scss/style.scss:css/style.css scss/preview.scss:css/preview.css",
+    "watch:css": "sass --no-source-map --watch scss/style.scss:css/style.css scss/preview.scss:css/preview.css",
+    "start": "serve ."
+  },
+  "devDependencies": {
+    "sass": "^1.89.0",
+    "serve": "^14.2.4"
+  }
+}

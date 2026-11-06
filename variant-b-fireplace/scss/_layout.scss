@@ -1,0 +1,76 @@
+@use 'variables' as *;
+
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: $page-bg;
+}
+
+.fit {
+  width: calc(#{$stage-w} * var(--scale, 1));
+  height: calc(#{$skyscraper-h} * var(--scale, 1));
+}
+
+.preview {
+  display: grid;
+  grid-template-columns: $skyscraper-w $top-w $skyscraper-w;
+  grid-template-rows: $top-h calc(#{$skyscraper-h} - #{$top-h} - #{$gap});
+  gap: $gap;
+  width: $stage-w;
+  height: $skyscraper-h;
+  transform: scale(var(--scale, 1));
+  transform-origin: 0 0;
+
+  &__frame {
+    display: block;
+    border: 0;
+
+    &--left {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      width: $skyscraper-w;
+      height: $skyscraper-h;
+    }
+
+    &--top {
+      grid-column: 2;
+      grid-row: 1;
+      width: $top-w;
+      height: $top-h;
+    }
+
+    &--right {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      width: $skyscraper-w;
+      height: $skyscraper-h;
+    }
+  }
+
+  &__site {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 16px;
+    color: #8a8a8a;
+    font: 14px/1.4 system-ui, sans-serif;
+    border: 1px dashed #4a4a4a;
+  }
+
+  &__replay {
+    padding: 8px 16px;
+    border: 1px solid #5a5a5a;
+    border-radius: 4px;
+    background: #333;
+    color: #ddd;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: #444;
+    }
+  }
+}

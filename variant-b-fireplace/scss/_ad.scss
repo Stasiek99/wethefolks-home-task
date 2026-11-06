@@ -1,0 +1,96 @@
+@use 'variables' as *;
+
+@mixin seam-mask($direction, $fade-bottom) {
+  $horizontal: linear-gradient($direction, #000, transparent);
+  $vertical: linear-gradient(#000, #000);
+
+  @if $fade-bottom {
+    $vertical: linear-gradient(to bottom, #000 calc(100% - #{$seam-fade-bottom}), transparent);
+  }
+
+  -webkit-mask-image: $horizontal, $vertical;
+  mask-image: $horizontal, $vertical;
+}
+
+.ad {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &--left,
+  &--right {
+    width: $skyscraper-w;
+    height: $skyscraper-h;
+  }
+
+  &--top {
+    width: $top-w;
+    height: $top-h;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -4px;
+  }
+
+  &__layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+
+    &--seam {
+      width: $seam-w;
+      height: $seam-h;
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+
+    &--seam-start {
+      left: 0;
+      @include seam-mask(to right, false);
+    }
+
+    &--seam-end {
+      left: auto;
+      right: 0;
+      @include seam-mask(to left, false);
+    }
+
+    &--seam-fade {
+      &.ad__layer--seam-start {
+        @include seam-mask(to right, true);
+      }
+
+      &.ad__layer--seam-end {
+        @include seam-mask(to left, true);
+      }
+    }
+
+    &--line-1 {
+      clip-path: inset(0 0 160px 0);
+    }
+
+    &--line-2 {
+      clip-path: inset(90px 0 93px 0);
+    }
+
+    &--line-3 {
+      clip-path: inset(157px 0 0 0);
+    }
+
+    &--cta {
+      left: $cta-left;
+      top: $cta-top;
+      width: $cta-w;
+      height: $cta-h;
+    }
+  }
+}

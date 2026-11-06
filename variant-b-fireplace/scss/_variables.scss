@@ -1,0 +1,18 @@
+$skyscraper-w: 320px;
+$skyscraper-h: 975px;
+$top-w: 1032px;
+$top-h: 250px;
+$gap: 4px;
+
+$cta-w: 172.5px;
+$cta-h: 46.5px;
+$cta-left: 73.75px;
+$cta-top: 837.5px;
+
+$page-bg: #282828;
+
+$seam-w: 64px;
+$seam-h: 250px;
+$seam-fade-bottom: 40px;
+
+$stage-w: $skyscraper-w + $gap + $top-w + $gap + $skyscraper-w;
