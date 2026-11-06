@@ -20,11 +20,10 @@
     ad.href = clickTag;
 
     const timeline = window.Intro.build(ad, part);
+    const motion = window.Motion.init(timeline);
 
     decoded(ad).then(function () {
-      window.Sync.whenStart(part, sync, function () {
-        timeline.restart();
-      });
+      window.Sync.whenStart(part, sync, motion.play);
     });
   }
 
