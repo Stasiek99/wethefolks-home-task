@@ -41,6 +41,31 @@ body {
   -webkit-user-drag: none;
   pointer-events: none;
 }
+.ad__layer--seam {
+  width: 64px;
+  height: 250px;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+.ad__layer--seam-start {
+  left: 0;
+  -webkit-mask-image: linear-gradient(to right, #000, transparent), linear-gradient(#000, #000);
+  mask-image: linear-gradient(to right, #000, transparent), linear-gradient(#000, #000);
+}
+.ad__layer--seam-end {
+  left: auto;
+  right: 0;
+  -webkit-mask-image: linear-gradient(to left, #000, transparent), linear-gradient(#000, #000);
+  mask-image: linear-gradient(to left, #000, transparent), linear-gradient(#000, #000);
+}
+.ad__layer--seam-fade.ad__layer--seam-start {
+  -webkit-mask-image: linear-gradient(to right, #000, transparent), linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to right, #000, transparent), linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+}
+.ad__layer--seam-fade.ad__layer--seam-end {
+  -webkit-mask-image: linear-gradient(to left, #000, transparent), linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to left, #000, transparent), linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+}
 .ad__layer--cta {
   left: 73.75px;
   top: 837.5px;
