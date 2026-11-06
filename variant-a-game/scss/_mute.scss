@@ -1,0 +1,46 @@
+.mute-toggle {
+  position: absolute;
+  top: 11px;
+  right: 6px;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 6px;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--navy);
+    outline-offset: 2px;
+  }
+
+  &__icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    stroke: currentColor;
+
+    &--off {
+      display: none;
+    }
+  }
+
+  &--muted &__icon--on {
+    display: none;
+  }
+
+  &--muted &__icon--off {
+    display: block;
+  }
+}

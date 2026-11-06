@@ -1,0 +1,32 @@
+@use 'variables' as *;
+
+:root {
+  --design-w: #{$design-w};
+  --design-h: #{$design-h};
+  --navy: #{$navy};
+  --playfield-top: #{$playfield-top};
+  --scale: 1;
+  --stage-x: 0px;
+  --stage-y: 0px;
+  --gut-x: #{$gut-start-x};
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--navy);
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}

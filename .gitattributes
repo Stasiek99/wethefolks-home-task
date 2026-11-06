@@ -1,0 +1,5 @@
+* text=auto
+*.min.js -text
+*.png binary
+*.jpg binary
+*.mp3 binary

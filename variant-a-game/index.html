@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="ad.size" content="width=360,height=640">
+  <title>Gut Run</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <main class="stage" aria-label="Gut Run">
+      <img class="sprite stage__layer stage__layer--bg" src="assets/bg.jpg" alt="" draggable="false">
+      <img class="sprite stage__layer stage__layer--texture" src="assets/01_game/bg_texture.png" alt="" draggable="false">
+
+      <div class="playfield">
+        <div class="playfield__world js-world">
+          <img class="sprite playfield__gut" src="assets/01_game/gameplay.png" alt="" draggable="false">
+        </div>
+        <img class="sprite playfield__player js-player" src="assets/01_game/player.png" alt="" draggable="false">
+      </div>
+
+      <img class="sprite stage__layer stage__layer--border" src="assets/border.png" alt="" draggable="false">
+
+      <section class="endcard endcard--fail js-endcard-fail" aria-hidden="true">
+        <img class="sprite endcard__layer endcard__bubble js-end-bubble" src="assets/02_endcard/fail/bubble.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--1 js-end-bacterium" src="assets/02_endcard/fail/bac1.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--2 js-end-bacterium" src="assets/02_endcard/fail/bac2.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--3 js-end-bacterium" src="assets/02_endcard/fail/bac3.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--4 js-end-bacterium" src="assets/02_endcard/fail/bac4.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__bacterium endcard__bacterium--5 js-end-bacterium" src="assets/02_endcard/fail/bac5.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__poo js-end-poo" src="assets/02_endcard/fail/sad.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__headline js-end-headline" src="assets/02_endcard/fail/hl.png" alt="Poo, das tat weh! Erfahre jetzt, was deinem Darm guttut." draggable="false">
+        <button class="endcard__button endcard__button--cta js-end-cta" type="button">
+          <img class="endcard__button-image" src="assets/02_endcard/fail/cta.png" alt="Jetzt informieren!" draggable="false">
+        </button>
+        <button class="endcard__button endcard__button--replay js-end-replay" type="button">
+          <img class="endcard__button-image" src="assets/02_endcard/fail/replay.png" alt="Nochmal spielen" draggable="false">
+        </button>
+      </section>
+
+      <section class="endcard endcard--win js-endcard-win" aria-hidden="true">
+        <img class="sprite endcard__layer endcard__bubble js-end-bubble" src="assets/02_endcard/win/bubble.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__poo js-end-poo" src="assets/02_endcard/win/happy.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__confetti js-end-confetti" src="assets/02_endcard/win/konfetti.png" alt="" draggable="false">
+        <img class="sprite endcard__layer endcard__headline js-end-headline" src="assets/02_endcard/win/hl.png" alt="Poo, tut das gut! Wenn du weißt, was dein Darm braucht." draggable="false">
+        <button class="endcard__button endcard__button--cta js-end-cta" type="button">
+          <img class="endcard__button-image" src="assets/02_endcard/win/cta.png" alt="Jetzt mehr erfahren" draggable="false">
+        </button>
+      </section>
+
+      <img class="sprite stage__layer stage__layer--logo js-logo" src="assets/logo.png" alt="Logo" draggable="false">
+      <img class="sprite stage__layer stage__layer--headline js-headline" src="assets/01_game/tut.png" alt="Bringe Poo durch den Darm ans Ziel." draggable="false">
+      <img class="sprite tutorial__gesture js-gesture" src="assets/gesture.png" alt="Tab to run" draggable="false">
+
+      <button class="mute-toggle js-mute" type="button" aria-label="Ton ausschalten">
+        <svg class="mute-toggle__icon mute-toggle__icon--on" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9v6h4l5 4V5L7 9H3z" stroke="none"/>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <svg class="mute-toggle__icon mute-toggle__icon--off" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9v6h4l5 4V5L7 9H3z" stroke="none"/>
+          <path d="M16 9l5 6M21 9l-5 6" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </main>
+  </div>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="js/stage.js"></script>
+  <script src="js/hitboxes.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/obstacles.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/endcard.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/mute.js"></script>
+  <script src="js/visibility.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

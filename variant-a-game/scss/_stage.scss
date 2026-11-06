@@ -1,0 +1,30 @@
+.stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--design-w);
+  height: var(--design-h);
+  overflow: hidden;
+  transform: translate(var(--stage-x), var(--stage-y)) scale(var(--scale));
+  transform-origin: 0 0;
+  background: var(--navy);
+
+  &__layer {
+    left: 0;
+    top: 0;
+    width: var(--design-w);
+    height: var(--design-h);
+
+    &--texture {
+      opacity: 1;
+    }
+  }
+
+  &--ended &__layer--headline,
+  &--ended &__layer--texture,
+  &--ended &__layer--border,
+  &--ended .playfield,
+  &--ended .tutorial__gesture {
+    display: none;
+  }
+}
