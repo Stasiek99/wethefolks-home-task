@@ -9,6 +9,8 @@
   window.GutRun = { clickTag, DEBUG };
 
   window.Game.init();
+  window.GameAudio.init();
+  window.Mute.init();
 
   const decoded = Array.from(document.images, (img) => img.decode().catch(() => {}));
   Promise.all(decoded).then(() => window.Intro.play());

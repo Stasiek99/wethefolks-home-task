@@ -130,6 +130,8 @@
     motion.add('(prefers-reduced-motion: reduce)', () => {
       stage.classList.add('stage--ended');
     });
+
+    window.dispatchEvent(new CustomEvent('endcard:show', { detail: { kind } }));
   }
 
   function schedule(kind, delay) {

@@ -41,6 +41,14 @@ window.GutRunConfig = Object.freeze({
     fade: 0.3,
   }),
 
+  audio: Object.freeze({
+    musicVolume: 0.45,
+    sfxVolume: 1,
+    applauseVolume: 0.8,
+    musicFade: 0.06,
+    muteStorageKey: 'gutrun:muted',
+  }),
+
   course: Object.freeze([
     { sprite: 'bac1', x: 430, y: 296 },
     { sprite: 'txt3', x: 550, y: 504 },

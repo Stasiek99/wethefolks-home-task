@@ -163,6 +163,7 @@
     y = PLAYER.startY;
     velocityY = 0;
     render();
+    emit('reset');
   }
 
   function createDebugOverlay(stage) {
