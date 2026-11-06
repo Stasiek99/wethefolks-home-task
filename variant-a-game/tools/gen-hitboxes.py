@@ -12,13 +12,16 @@ OUT = os.path.join(ROOT, 'js', 'hitboxes.js')
 BAND = 8
 MERGE_TOL = 6
 
+TEXT_BAND = 4
+TEXT_MERGE_TOL = 3
+TEXT_INSET_X = 2
+
 SHAPES = {
     'player': 4,
     'bac1': 6, 'bac2': 4, 'bac3': 4, 'bac4': 4, 'bac5': 6, 'bac6': 6,
 }
 
 TEXT = ['txt%d' % i for i in range(1, 10)]
-TEXT_INSET = 4
 
 
 def solid_mask(path, erode):
@@ -29,22 +32,22 @@ def solid_mask(path, erode):
     return mask
 
 
-def bands(mask):
+def bands(mask, band):
     w, h = mask.size
     px = mask.load()
     out = []
-    for y0 in range(0, h, BAND):
-        y1 = min(y0 + BAND, h)
+    for y0 in range(0, h, band):
+        y1 = min(y0 + band, h)
         xs = [x for y in range(y0, y1) for x in range(w) if px[x, y]]
         if xs:
             out.append([min(xs), y0, max(xs) + 1, y1])
     return out
 
 
-def merge(rects):
+def merge(rects, tol):
     merged = []
     for x0, y0, x1, y1 in rects:
-        if merged and abs(merged[-1][0] - x0) <= MERGE_TOL and abs(merged[-1][2] - x1) <= MERGE_TOL \
+        if merged and abs(merged[-1][0] - x0) <= tol and abs(merged[-1][2] - x1) <= tol \
                 and merged[-1][3] == y0:
             m = merged[-1]
             m[0], m[2], m[3] = min(m[0], x0), max(m[2], x1), y1
@@ -57,9 +60,9 @@ def css(v):
     return round(v / 2 * 2) / 2
 
 
-def text_rect(path):
-    x0, y0, x1, y1 = solid_mask(path, 0).getbbox()
-    return [[x0 + TEXT_INSET, y0 + TEXT_INSET, x1 - TEXT_INSET, y1 - TEXT_INSET]]
+def text_rects(path):
+    rects = merge(bands(solid_mask(path, 0), TEXT_BAND), TEXT_MERGE_TOL)
+    return [[x0 + TEXT_INSET_X, y0, x1 - TEXT_INSET_X, y1] for x0, y0, x1, y1 in rects if x1 - x0 > 2 * TEXT_INSET_X]
 
 
 def main():
@@ -68,7 +71,7 @@ def main():
     for name, erode, is_text in sources:
         path = os.path.join(ASSETS, name + '.png')
         w, h = Image.open(path).size
-        rects = text_rect(path) if is_text else merge(bands(solid_mask(path, erode)))
+        rects = text_rects(path) if is_text else merge(bands(solid_mask(path, erode), BAND), MERGE_TOL)
         data[name] = {
             'w': w / 2,
             'h': h / 2,

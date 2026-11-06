@@ -21,7 +21,13 @@
     const { w, h } = getViewportSize();
     if (!w || !h) return;
     const scale = Math.min(w / DESIGN_W, h / DESIGN_H);
+    const dpr = window.devicePixelRatio || 1;
+    const x = Math.round(((w - DESIGN_W * scale) / 2) * dpr) / dpr;
+    const y = Math.round(((h - DESIGN_H * scale) / 2) * dpr) / dpr;
+
     root.style.setProperty('--scale', scale.toFixed(5));
+    root.style.setProperty('--stage-x', x + 'px');
+    root.style.setProperty('--stage-y', y + 'px');
     window.dispatchEvent(new CustomEvent('stage:resize', { detail: { scale, w, h } }));
   }
 

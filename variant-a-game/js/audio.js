@@ -13,6 +13,8 @@
 
   const UNLOCK_EVENTS = ['pointerdown', 'pointerup', 'touchend', 'keydown'];
 
+  const SILENCE_THRESHOLD = 0.002;
+
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 
   let context = null;
@@ -21,6 +23,7 @@
   let wantMusic = false;
   let music = null;
   let suspendedByPause = false;
+  let musicLoop = null;
 
   const buffers = {};
   const active = new Set();
@@ -41,6 +44,26 @@
     }
   }
 
+  function findLoopWindow(buffer) {
+    let first = buffer.length;
+    let last = 0;
+
+    for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+      const data = buffer.getChannelData(channel);
+
+      let head = 0;
+      while (head < data.length && Math.abs(data[head]) < SILENCE_THRESHOLD) head++;
+
+      let tail = data.length - 1;
+      while (tail > head && Math.abs(data[tail]) < SILENCE_THRESHOLD) tail--;
+
+      first = Math.min(first, head);
+      last = Math.max(last, tail);
+    }
+
+    return { start: first / buffer.sampleRate, end: (last + 1) / buffer.sampleRate };
+  }
+
   function decode(arrayBuffer) {
     return new Promise((resolve, reject) => {
       const result = context.decodeAudioData(arrayBuffer, resolve, reject);
@@ -57,6 +80,7 @@
       .then(decode)
       .then((buffer) => {
         buffers[name] = buffer;
+        if (name === 'music') musicLoop = findLoopWindow(buffer);
         if (name === 'music' && wantMusic) startMusic();
       })
       .catch((error) => {
@@ -97,6 +121,10 @@
     const source = context.createBufferSource();
     source.buffer = buffer;
     source.loop = loop;
+    if (loop && musicLoop) {
+      source.loopStart = musicLoop.start;
+      source.loopEnd = musicLoop.end;
+    }
 
     const gain = context.createGain();
     gain.gain.value = volume;
@@ -113,7 +141,7 @@
       if (music === voice) music = null;
     };
 
-    source.start();
+    source.start(0, loop && musicLoop ? musicLoop.start : 0);
     return voice;
   }
 
@@ -201,6 +229,7 @@
       voices: active.size,
       names: Array.from(active, (voice) => voice.name),
       music: Boolean(music),
+      loopWindow: musicLoop,
       muted,
       gain: master ? Number(master.gain.value.toFixed(3)) : null,
     }),
