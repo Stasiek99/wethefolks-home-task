@@ -1,0 +1,36 @@
+@use 'sass:math';
+@use 'variables' as *;
+
+$layout-w: 1684px;
+$layout-h: 1018px;
+$layout-scale: 0.975;
+
+@function at-design($value) {
+  @return -(math.div($value, $layout-scale));
+}
+
+.debug {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: url('../design/layout.png') no-repeat;
+  background-size: math.div($layout-w, $layout-scale) math.div($layout-h, $layout-scale);
+  opacity: 0.5;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &--left {
+    background-position: at-design(28px) at-design(50px);
+  }
+
+  &--top {
+    background-position: at-design(343px) at-design(50px);
+  }
+
+  &--right {
+    background-position: at-design(1350.5px) at-design(49.5px);
+  }
+}
