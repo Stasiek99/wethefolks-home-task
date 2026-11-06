@@ -8,6 +8,17 @@
   const SHAPE_TOP = Math.min(...PLAYER_SHAPE.map(([, ry]) => ry));
   const SHAPE_BOTTOM = Math.max(...PLAYER_SHAPE.map(([, ry, , rh]) => ry + rh));
 
+  const PLAYER_RECTS = PLAYER_SHAPE.map(([rx, ry, rw, rh]) => ({
+    x0: PLAYER.x + rx,
+    x1: PLAYER.x + rx + rw,
+    offsetY: ry,
+    height: rh,
+    y0: 0,
+    y1: 0,
+  }));
+  const PLAYER_LEFT = Math.min(...PLAYER_RECTS.map((rect) => rect.x0));
+  const PLAYER_RIGHT = Math.max(...PLAYER_RECTS.map((rect) => rect.x1));
+
   const STATE = Object.freeze({
     READY: 'ready',
     REWIND: 'rewind',
@@ -22,6 +33,8 @@
   let gutX = SCROLL.startX;
   let y = PLAYER.startY;
   let velocityY = 0;
+  let prevGutX = gutX;
+  let prevY = y;
 
   let rafId = 0;
   let lastTime = 0;
@@ -41,10 +54,14 @@
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  function render() {
-    worldEl.style.setProperty('--gut-x', gutX.toFixed(2) + 'px');
-    setPlayerY(y - PLAYER.startY);
-    renderDebug();
+  function render(alpha = 1) {
+    const blend = state === STATE.RUNNING ? alpha : 1;
+    const drawX = prevGutX + (gutX - prevGutX) * blend;
+    const drawY = prevY + (y - prevY) * blend;
+
+    worldEl.style.transform = 'translate3d(' + drawX.toFixed(2) + 'px,0,0)';
+    setPlayerY(drawY - PLAYER.startY);
+    renderDebug(drawY);
   }
 
   function progress() {
@@ -55,7 +72,17 @@
     return SCROLL.speedStart + (SCROLL.speedEnd - SCROLL.speedStart) * progress();
   }
 
+  function syncPlayerRects() {
+    for (let i = 0; i < PLAYER_RECTS.length; i++) {
+      const rect = PLAYER_RECTS[i];
+      rect.y0 = y + rect.offsetY;
+      rect.y1 = rect.y0 + rect.height;
+    }
+  }
+
   function update(dt) {
+    prevGutX = gutX;
+    prevY = y;
     gutX -= scrollSpeed() * dt;
 
     velocityY = Math.min(velocityY + PHYSICS.gravity * dt, PHYSICS.maxFallSpeed);
@@ -66,7 +93,8 @@
       return;
     }
 
-    const obstacle = window.Obstacles.hit(gutX, playerRects());
+    syncPlayerRects();
+    const obstacle = window.Obstacles.hit(gutX, PLAYER_RECTS, PLAYER_LEFT, PLAYER_RIGHT);
     if (obstacle) {
       finish(STATE.FAIL, { reason: 'obstacle', sprite: obstacle.sprite });
       return;
@@ -76,15 +104,6 @@
       gutX = SCROLL.endX;
       finish(STATE.WIN);
     }
-  }
-
-  function playerRects() {
-    return PLAYER_SHAPE.map(([rx, ry, rw, rh]) => ({
-      x0: PLAYER.x + rx,
-      y0: y + ry,
-      x1: PLAYER.x + rx + rw,
-      y1: y + ry + rh,
-    }));
   }
 
   function frame(now) {
@@ -98,7 +117,7 @@
       update(PHYSICS.step);
       accumulator -= PHYSICS.step;
     }
-    render();
+    render(accumulator / PHYSICS.step);
   }
 
   function stopLoop() {
@@ -116,6 +135,8 @@
   function beginRun() {
     state = STATE.RUNNING;
     velocityY = PHYSICS.startVelocity;
+    prevGutX = gutX;
+    prevY = y;
     accumulator = 0;
     lastTime = performance.now();
     rafId = requestAnimationFrame(frame);
@@ -207,9 +228,9 @@
     overlay.append(...hitboxes, ...limits);
     stage.append(overlay);
 
-    return () => {
+    return (drawY) => {
       hitboxes.forEach((box) => {
-        box.style.top = y + Number(box.dataset.offset) + 'px';
+        box.style.top = drawY + Number(box.dataset.offset) + 'px';
       });
     };
   }

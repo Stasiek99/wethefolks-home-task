@@ -54,18 +54,18 @@
     return obstacles;
   }
 
-  function hit(gutX, playerRects) {
-    const left = playerRects.reduce((m, r) => Math.min(m, r.x0), Infinity);
-    const right = playerRects.reduce((m, r) => Math.max(m, r.x1), -Infinity);
-
-    for (const o of obstacles) {
+  function hit(gutX, playerRects, left, right) {
+    for (let i = 0; i < obstacles.length; i++) {
+      const o = obstacles[i];
       const screenLeft = o.x + gutX;
       if (screenLeft > right || screenLeft + o.w < left) continue;
 
-      for (const r of o.rects) {
+      for (let j = 0; j < o.rects.length; j++) {
+        const r = o.rects[j];
         const x0 = r.x0 + gutX;
         const x1 = r.x1 + gutX;
-        for (const p of playerRects) {
+        for (let k = 0; k < playerRects.length; k++) {
+          const p = playerRects[k];
           if (p.x0 < x1 && p.x1 > x0 && p.y0 < r.y1 && p.y1 > r.y0) return o;
         }
       }

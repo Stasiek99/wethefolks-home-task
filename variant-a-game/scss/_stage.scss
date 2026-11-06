@@ -21,6 +21,9 @@
   }
 
   &--ended &__layer--headline,
+  &--ended &__layer--texture,
+  &--ended &__layer--border,
+  &--ended .playfield,
   &--ended .tutorial__gesture {
     display: none;
   }
