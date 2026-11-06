@@ -6,6 +6,8 @@
   const frames = Array.from(document.querySelectorAll('.js-frame'));
   const replay = document.querySelector('.js-replay');
   const query = new URLSearchParams(window.location.search);
+  const STAGE_W = 1680;
+  const STAGE_H = 975;
   const ready = new Set();
   let started = false;
 
@@ -38,4 +40,12 @@
     if (query.has('debug')) params.set('debug', '1');
     frame.src = frame.dataset.src + '?' + params;
   });
+
+  function fit() {
+    const scale = Math.min(1, window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+    document.documentElement.style.setProperty('--scale', scale.toFixed(4));
+  }
+
+  fit();
+  window.addEventListener('resize', fit);
 })();

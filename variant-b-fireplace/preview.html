@@ -6,14 +6,18 @@
   <title>Fireplace preview</title>
   <link rel="stylesheet" href="css/preview.css">
 </head>
-<body class="preview">
-  <iframe class="js-frame preview__frame preview__frame--left" data-src="left.html" title="Fireplace left"></iframe>
-  <iframe class="js-frame preview__frame preview__frame--top" data-src="top.html" title="Fireplace top"></iframe>
-  <div class="preview__site">
-    <span>Publisher website</span>
-    <button class="preview__replay js-replay" type="button">Replay intro</button>
+<body class="page">
+  <div class="fit">
+    <div class="preview">
+      <iframe class="js-frame preview__frame preview__frame--left" data-src="left.html" title="Fireplace left"></iframe>
+      <iframe class="js-frame preview__frame preview__frame--top" data-src="top.html" title="Fireplace top"></iframe>
+      <div class="preview__site">
+        <span>Publisher website</span>
+        <button class="preview__replay js-replay" type="button">Replay intro</button>
+      </div>
+      <iframe class="js-frame preview__frame preview__frame--right" data-src="right.html" title="Fireplace right"></iframe>
+    </div>
   </div>
-  <iframe class="js-frame preview__frame preview__frame--right" data-src="right.html" title="Fireplace right"></iframe>
   <script src="js/preview.js"></script>
 </body>
 </html>
